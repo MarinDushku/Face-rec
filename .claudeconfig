@@ -1,0 +1,49 @@
+{
+  "project": {
+    "name": "Face Recognition System",
+    "description": "Custom face detection and recognition module built from scratch",
+    "repository": "https://github.com/MarinDushku/Face-rec",
+    "type": "web-frontend"
+  },
+  "tools": {
+    "enabled": [
+      "bash",
+      "edit",
+      "read",
+      "write",
+      "glob",
+      "grep"
+    ]
+  },
+  "workflows": {
+    "development": {
+      "commands": {
+        "start": "npm run dev",
+        "build": "npm run build",
+        "test": "npm run test",
+        "lint": "npm run lint",
+        "typecheck": "npm run typecheck",
+        "format": "npm run format"
+      }
+    },
+    "github": {
+      "auto_pr": true,
+      "pr_template": ".github/ISSUE_TEMPLATE/structured-task.md"
+    }
+  },
+  "context": {
+    "architecture_file": "CLAUDE.md",
+    "key_directories": [
+      "src/components",
+      "src/core",
+      "src/utils",
+      "src/types"
+    ],
+    "conventions": {
+      "typescript": "strict",
+      "react": "functional-components",
+      "testing": "vitest",
+      "styling": "css-modules"
+    }
+  }
+}

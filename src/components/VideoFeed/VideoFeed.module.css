@@ -1,0 +1,48 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.video {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+  padding: 1rem;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c33;
+  max-width: 640px;
+  text-align: center;
+}
+
+.loading {
+  padding: 1rem;
+  background-color: #eff;
+  border: 1px solid #ccf;
+  border-radius: 4px;
+  color: #333;
+  max-width: 640px;
+  text-align: center;
+}
+
+.status {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.active {
+  color: #060;
+}
+
+.inactive {
+  color: #c33;
+}
