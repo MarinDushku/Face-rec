@@ -7,7 +7,10 @@ interface VideoFeedProps {
   width?: number
   height?: number
   frameRate?: number
-  onStreamReady?: (videoElement: HTMLVideoElement, streamer: VideoStreamer) => void
+  onStreamReady?: (
+    videoElement: HTMLVideoElement,
+    streamer: VideoStreamer
+  ) => void
   onError?: (error: VideoError) => void
 }
 
@@ -16,7 +19,7 @@ export const VideoFeed: React.FC<VideoFeedProps> = ({
   height = 480,
   frameRate = 30,
   onStreamReady,
-  onError
+  onError,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const streamerRef = useRef<VideoStreamer | null>(null)
@@ -33,16 +36,16 @@ export const VideoFeed: React.FC<VideoFeedProps> = ({
         const streamer = new VideoStreamer({
           width,
           height,
-          frameRate
+          frameRate,
         })
-        
+
         streamerRef.current = streamer
         const videoStream = await streamer.initialize()
-        
+
         if (videoRef.current && videoStream.stream) {
           videoRef.current.srcObject = videoStream.stream
           setStream(videoStream)
-          
+
           videoRef.current.onloadedmetadata = () => {
             if (videoRef.current && streamerRef.current) {
               onStreamReady?.(videoRef.current, streamerRef.current)
@@ -70,9 +73,7 @@ export const VideoFeed: React.FC<VideoFeedProps> = ({
   if (isLoading) {
     return (
       <div className={styles.container}>
-        <div className={styles.loading}>
-          Initializing camera...
-        </div>
+        <div className={styles.loading}>Initializing camera...</div>
       </div>
     )
   }
@@ -111,9 +112,7 @@ export const VideoFeed: React.FC<VideoFeedProps> = ({
         <span className={stream?.isActive ? styles.active : styles.inactive}>
           {stream?.isActive ? 'Active' : 'Inactive'}
         </span>
-        {stream?.isActive && (
-          <span> • {stream.frameRate} FPS</span>
-        )}
+        {stream?.isActive && <span> • {stream.frameRate} FPS</span>}
       </div>
     </div>
   )

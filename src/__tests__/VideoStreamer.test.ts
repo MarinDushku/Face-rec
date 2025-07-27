@@ -4,19 +4,19 @@ import { VideoStreamer } from '@/core/VideoStreamer'
 // Mock MediaDevices
 const mockGetUserMedia = vi.fn()
 const mockTrack = {
-  stop: vi.fn()
+  stop: vi.fn(),
 }
 const mockStream = {
-  getTracks: vi.fn(() => [mockTrack])
+  getTracks: vi.fn(() => [mockTrack]),
 }
 
 Object.defineProperty(globalThis, 'navigator', {
   value: {
     mediaDevices: {
-      getUserMedia: mockGetUserMedia
-    }
+      getUserMedia: mockGetUserMedia,
+    },
   },
-  writable: true
+  writable: true,
 })
 
 // Mock HTMLCanvasElement and CanvasRenderingContext2D
@@ -25,21 +25,21 @@ const mockContext = {
   getImageData: vi.fn(() => ({
     data: new Uint8ClampedArray(640 * 480 * 4),
     width: 640,
-    height: 480
-  }))
+    height: 480,
+  })),
 }
 
 const mockCanvas = {
   getContext: vi.fn(() => mockContext),
   width: 0,
-  height: 0
+  height: 0,
 }
 
 Object.defineProperty(globalThis, 'document', {
   value: {
-    createElement: vi.fn(() => mockCanvas)
+    createElement: vi.fn(() => mockCanvas),
   },
-  writable: true
+  writable: true,
 })
 
 describe('VideoStreamer', () => {
@@ -49,7 +49,7 @@ describe('VideoStreamer', () => {
     videoStreamer = new VideoStreamer({
       width: 640,
       height: 480,
-      frameRate: 30
+      frameRate: 30,
     })
     vi.clearAllMocks()
   })
@@ -69,15 +69,15 @@ describe('VideoStreamer', () => {
           width: { ideal: 640 },
           height: { ideal: 480 },
           frameRate: { ideal: 30 },
-          facingMode: 'user'
+          facingMode: 'user',
         },
-        audio: false
+        audio: false,
       })
 
       expect(result).toEqual({
         stream: mockStream,
         isActive: true,
-        frameRate: 30
+        frameRate: 30,
       })
     })
 
@@ -87,8 +87,9 @@ describe('VideoStreamer', () => {
 
       await expect(videoStreamer.initialize()).rejects.toEqual({
         code: 'PERMISSION_DENIED',
-        message: 'Camera access denied. Please grant permission to use the camera.',
-        type: 'permission'
+        message:
+          'Camera access denied. Please grant permission to use the camera.',
+        type: 'permission',
       })
     })
 
@@ -99,7 +100,7 @@ describe('VideoStreamer', () => {
       await expect(videoStreamer.initialize()).rejects.toEqual({
         code: 'DEVICE_NOT_FOUND',
         message: 'No camera device found. Please ensure a camera is connected.',
-        type: 'device'
+        type: 'device',
       })
     })
 
@@ -110,7 +111,7 @@ describe('VideoStreamer', () => {
       await expect(videoStreamer.initialize()).rejects.toEqual({
         code: 'UNKNOWN_ERROR',
         message: 'Video initialization failed: Some unknown error',
-        type: 'unknown'
+        type: 'unknown',
       })
     })
   })
@@ -118,7 +119,7 @@ describe('VideoStreamer', () => {
   describe('captureFrame', () => {
     const mockVideoElement = {
       videoWidth: 640,
-      videoHeight: 480
+      videoHeight: 480,
     } as HTMLVideoElement
 
     it('should return null when not initialized', () => {

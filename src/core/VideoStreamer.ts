@@ -1,4 +1,8 @@
-import type { VideoStream, VideoStreamerConfig, VideoError } from '@/types/video'
+import type {
+  VideoStream,
+  VideoStreamerConfig,
+  VideoError,
+} from '@/types/video'
 
 export class VideoStreamer {
   private stream: MediaStream | null = null
@@ -18,9 +22,9 @@ export class VideoStreamer {
           width: { ideal: this.config.width },
           height: { ideal: this.config.height },
           frameRate: { ideal: this.config.frameRate },
-          facingMode: this.config.facingMode || 'user'
+          facingMode: this.config.facingMode || 'user',
         },
-        audio: false
+        audio: false,
       }
 
       this.stream = await navigator.mediaDevices.getUserMedia(constraints)
@@ -29,7 +33,7 @@ export class VideoStreamer {
       return {
         stream: this.stream,
         isActive: true,
-        frameRate: this.config.frameRate
+        frameRate: this.config.frameRate,
       }
     } catch (error) {
       const videoError = this.mapError(error as Error)
@@ -71,7 +75,7 @@ export class VideoStreamer {
 
   cleanup(): void {
     if (this.stream) {
-      this.stream.getTracks().forEach(track => track.stop())
+      this.stream.getTracks().forEach((track) => track.stop())
       this.stream = null
     }
     this.isInitialized = false
@@ -89,27 +93,28 @@ export class VideoStreamer {
 
   private mapError(error: Error): VideoError {
     const message = error.message.toLowerCase()
-    
+
     if (message.includes('permission') || message.includes('denied')) {
       return {
         code: 'PERMISSION_DENIED',
-        message: 'Camera access denied. Please grant permission to use the camera.',
-        type: 'permission'
+        message:
+          'Camera access denied. Please grant permission to use the camera.',
+        type: 'permission',
       }
     }
-    
+
     if (message.includes('device') || message.includes('notfound')) {
       return {
         code: 'DEVICE_NOT_FOUND',
         message: 'No camera device found. Please ensure a camera is connected.',
-        type: 'device'
+        type: 'device',
       }
     }
-    
+
     return {
       code: 'UNKNOWN_ERROR',
       message: `Video initialization failed: ${error.message}`,
-      type: 'unknown'
+      type: 'unknown',
     }
   }
 }

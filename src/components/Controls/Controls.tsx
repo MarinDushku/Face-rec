@@ -12,7 +12,7 @@ export const Controls: React.FC<ControlsProps> = ({
   isActive,
   onStart,
   onStop,
-  disabled = false
+  disabled = false,
 }) => {
   return (
     <div className={styles.container}>
@@ -23,7 +23,7 @@ export const Controls: React.FC<ControlsProps> = ({
       >
         Start Camera
       </button>
-      
+
       <button
         className={`${styles.button} ${styles.stopButton}`}
         onClick={onStop}
@@ -31,10 +31,10 @@ export const Controls: React.FC<ControlsProps> = ({
       >
         Stop Camera
       </button>
-      
+
       <div className={styles.info}>
         <span>Camera:</span>
-        <span 
+        <span
           className={`${styles.status} ${
             isActive ? styles.statusActive : styles.statusInactive
           }`}
